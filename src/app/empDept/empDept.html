@@ -1,0 +1,29 @@
+<h2>Liste des empDept</h2>
+<table>
+  <thead>
+    <tr>
+     <th>idEmpDept </th> 
+ 	<th>idEmp </th> 
+ 	<th>idDept </th> 
+ 	
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let uneligne of empDept">
+     <td>{{uneligne.idEmpDept}}</td> 
+ 	<td>{{uneligne.idEmp}}</td> 
+ 	<td>{{uneligne.idDept}}</td> 
+ 	
+      <td>
+        
+        <!-- <button (click)="empDeptSelectionne = empDept">Modifier</button> -->
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Ajouter un nouvel empDeptt</h2>
+<form (submit)="insertEmpDept()">
+  <button type="submit">Ajouter</button>
+</form>
+
