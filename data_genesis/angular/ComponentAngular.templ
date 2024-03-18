@@ -1,0 +1,50 @@
+import { Component, OnInit } from '@angular/core';
+import { [classNameMaj] } from './[classNameMin].model'; 
+import { [classNameMaj]Service } from './[classNameMin].service';
+
+@Component({
+  selector: 'app-[classNameMin]',
+  templateUrl: './[classNameMin].html',
+  styleUrls: []
+})
+export class [classNameMaj]Component implements OnInit {
+
+  [classNameMin]: [classNameMaj][] = [];
+  nouvel[classNameMaj]: [classNameMaj] = {} as [classNameMaj]; 
+  [classNameMin]Selectionne: [classNameMaj] = {} as [classNameMaj]; 
+
+  constructor(private [classNameMin]Service: [classNameMaj]Service) { }
+
+  ngOnInit(): void {
+    this.get[classNameMaj]();
+  }
+
+  get[classNameMaj](): void {
+    this.[classNameMin]Service.get[classNameMaj]().subscribe(
+      (data: [classNameMaj][]) => {
+        this.[classNameMin] = data;
+      },
+      (error) => {
+        console.log('Erreur lors de la récupération des [classNameMin] : ', error);
+      }
+    );
+  }
+
+  insert[classNameMaj](): void {
+    this.[classNameMin]Service.insert[classNameMaj](this.nouvel[classNameMaj]).subscribe(
+      
+    );
+  }
+
+  update[classNameMaj](): void {
+    this.[classNameMin]Service.update[classNameMaj](this.[classNameMin]Selectionne).subscribe(
+      
+    );
+  }
+
+  delete[classNameMaj](id: number): void {
+    this.[classNameMin]Service.delete[classNameMaj](id).subscribe(
+     
+    );
+  }
+}

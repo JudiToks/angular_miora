@@ -1,0 +1,39 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { [classNameMaj] } from './[classNameMin].model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class [classNameMaj]Service {
+
+  private apiUrl = '[url]/[classNameMin]';
+
+  constructor(private http: HttpClient) { }
+
+  
+  get[classNameMaj](): Observable<[classNameMaj][]> {
+    return this.http.get<[classNameMaj][]>(this.apiUrl);
+  }
+
+ 
+  insert[classNameMaj]([classNameMin]: [classNameMaj]): Observable<void> {
+    this.http.post<[classNameMaj]>(this.apiUrl, [classNameMin]);
+    return new Observable<void>();
+  }
+
+ 
+  update[classNameMaj]([classNameMin]: [classNameMaj]): Observable<void> {
+    //const url = `${this.apiUrl}/${ [classNameMin].id}`;
+    this.http.put<[classNameMaj]>(this.apiUrl,  [classNameMin]);
+    return new Observable<void>();
+  }
+
+  
+  delete[classNameMaj](id: number): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    this.http.delete<void>(url);
+    return new Observable<void>();
+  }
+}
