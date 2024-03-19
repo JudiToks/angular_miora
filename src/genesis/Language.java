@@ -397,6 +397,18 @@ public class Language {
         content = content.replace("[routes]", routes);System.out.println(filepath+"\\app.routes.ts");
         HandyManUtils.overwriteFileContent(filepath+"/app.routes.ts", content);
     }
+    public void overWriteModule(Entity[] entities,String filepath)throws IOException, Exception, Throwable{
+        String content = HandyManUtils.getFileContent(Constantes.DATA_PATH+"/angular/ModuleAngular."+Constantes.MODEL_TEMPLATE_EXT);
+        String imports = "";
+        String routes = "";
+        for(int i=0;i<entities.length;i++){
+            imports +="import { "+HandyManUtils.majStart(entities[i].getClassName())+"Component } from './"+ HandyManUtils.minStart(entities[i].getClassName())+"/"+HandyManUtils.minStart(entities[i].getClassName())+".component'; \n";
+            routes+=HandyManUtils.majStart(entities[i].getClassName())+"Component , \n \t";
+        }
+        content = content.replace("[imports]", imports);
+        content = content.replace("[classComponents]", routes);
+        HandyManUtils.overwriteFileContent(filepath+"/app.module.ts", content);
+    }
     public void generateSpecANgular(Entity entity,String path)throws IOException, Exception, Throwable{
          String content = HandyManUtils.getFileContent(Constantes.DATA_PATH+"/angular/SpecAngular."+Constantes.MODEL_TEMPLATE_EXT);
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));

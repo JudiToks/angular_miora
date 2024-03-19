@@ -8,7 +8,7 @@ import { Emp } from './emp.model';
 })
 export class EmpService {
 
-  private apiUrl = 'localhost:8080/emp';
+  private apiUrl = 'http://localhost:8080/emp';
 
   constructor(private http: HttpClient) { }
 
@@ -19,16 +19,21 @@ export class EmpService {
 
  
   insertEmp(emp: Emp): Observable<void> {
-    return this.http.post<void>(this.apiUrl, emp);
+    this.http.post<Emp>(this.apiUrl, emp);
+    return new Observable<void>();
   }
-  
+
+ 
   updateEmp(emp: Emp): Observable<void> {
-    return this.http.put<void>(this.apiUrl, emp);
+    //const url = `${this.apiUrl}/${ emp.id}`;
+    this.http.put<Emp>(this.apiUrl,  emp);
+    return new Observable<void>();
   }
+
   
   deleteEmp(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
-    return this.http.delete<void>(url);
+    this.http.delete<void>(url);
+    return new Observable<void>();
   }
-  
 }

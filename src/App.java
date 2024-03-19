@@ -167,6 +167,7 @@ public class App {
                     }
                     
                     language.overWriteRoute(entities, vue_paths);
+                   language.overWriteModule(entities, vue_paths);
             }
         }
     }

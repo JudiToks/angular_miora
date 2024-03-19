@@ -1,16 +1,23 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
-import { AppComponent } from './app.component';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { routes } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
+import { NgFor } from '@angular/common';
+import { EmpComponent } from './emp/emp.component'; 
+import { EmpDeptComponent } from './empDept/empDept.component'; 
+import { DeptComponent } from './dept/dept.component'; 
+
 @NgModule({
   declarations: [
+    EmpComponent , 
+ 	  EmpDeptComponent , 
+ 	  DeptComponent , 
+ 	
   ],
   imports: [
+    NgFor,
     HttpClientModule,
-    BrowserModule,
-    RouterModule.forRoot(routes) 
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: []
