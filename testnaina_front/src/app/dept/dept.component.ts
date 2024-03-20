@@ -31,20 +31,37 @@ export class DeptComponent implements OnInit {
   }
 
   insertDept(): void {
-    this.deptService.insertDept(this.nouvelDept).subscribe(
-      
+    this.deptService.insertDept(this.nouvelDept).subscribe({
+      next : (value) =>{
+            this.getDept()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   updateDept(): void {
-    this.deptService.updateDept(this.deptSelectionne).subscribe(
-      
+    this.deptService.updateDept(this.deptSelectionne).subscribe({
+      next : (value) =>{
+            this.getDept()
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   deleteDept(id: number): void {
-    this.deptService.deleteDept(id).subscribe(
-     
+    this.deptService.deleteDept(id).subscribe({
+     next : (value) =>{
+            this.getDept()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 }

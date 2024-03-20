@@ -31,20 +31,37 @@ export class EmpDeptComponent implements OnInit {
   }
 
   insertEmpDept(): void {
-    this.empDeptService.insertEmpDept(this.nouvelEmpDept).subscribe(
-      
+    this.empDeptService.insertEmpDept(this.nouvelEmpDept).subscribe({
+      next : (value) =>{
+            this.getEmpDept()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   updateEmpDept(): void {
-    this.empDeptService.updateEmpDept(this.empDeptSelectionne).subscribe(
-      
+    this.empDeptService.updateEmpDept(this.empDeptSelectionne).subscribe({
+      next : (value) =>{
+            this.getEmpDept()
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   deleteEmpDept(id: number): void {
-    this.empDeptService.deleteEmpDept(id).subscribe(
-     
+    this.empDeptService.deleteEmpDept(id).subscribe({
+     next : (value) =>{
+            this.getEmpDept()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 }

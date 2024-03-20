@@ -18,22 +18,19 @@ export class EmpService {
   }
 
  
-  insertEmp(emp: Emp): Observable<void> {
-    this.http.post<Emp>(this.apiUrl, emp);
-    return new Observable<void>();
+  insertEmp(emp: Emp) {
+     return this.http.post<Emp>(this.apiUrl, emp);
   }
 
  
-  updateEmp(emp: Emp): Observable<void> {
+  updateEmp(emp: Emp) {
     //const url = `${this.apiUrl}/${ emp.id}`;
-    this.http.put<Emp>(this.apiUrl,  emp);
-    return new Observable<void>();
+    return this.http.put<Emp>(this.apiUrl,  emp);
   }
 
   
-  deleteEmp(id: number): Observable<void> {
+  deleteEmp(id: number) {
     const url = `${this.apiUrl}/${id}`;
-    this.http.delete<void>(url);
-    return new Observable<void>();
+    return this.http.delete<void>(url);
   }
 }

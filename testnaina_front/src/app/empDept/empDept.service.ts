@@ -18,22 +18,19 @@ export class EmpDeptService {
   }
 
  
-  insertEmpDept(empDept: EmpDept): Observable<void> {
-    this.http.post<EmpDept>(this.apiUrl, empDept);
-    return new Observable<void>();
+  insertEmpDept(empDept: EmpDept) {
+     return this.http.post<EmpDept>(this.apiUrl, empDept);
   }
 
  
-  updateEmpDept(empDept: EmpDept): Observable<void> {
+  updateEmpDept(empDept: EmpDept) {
     //const url = `${this.apiUrl}/${ empDept.id}`;
-    this.http.put<EmpDept>(this.apiUrl,  empDept);
-    return new Observable<void>();
+    return this.http.put<EmpDept>(this.apiUrl,  empDept);
   }
 
   
-  deleteEmpDept(id: number): Observable<void> {
+  deleteEmpDept(id: number) {
     const url = `${this.apiUrl}/${id}`;
-    this.http.delete<void>(url);
-    return new Observable<void>();
+    return this.http.delete<void>(url);
   }
 }

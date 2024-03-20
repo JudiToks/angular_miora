@@ -9,15 +9,22 @@
     <tr *ngFor="let uneligne of [classNameMin]">
      [valeurs]
       <td>
-        
-        <button (click)="[classNameMin]Selectionne = [classNameMin]">Modifier</button>
+        <button (click)="delete[classNameMaj](uneligne.id[classNameMaj])">Supprimer</button>
+        <button (click)="[classNameMin]Selectionne = uneligne">Modifier</button>
       </td>
     </tr>
   </tbody>
 </table>
 
-<h2>Ajouter un nouvel [classNameMin]t</h2>
+<h2>Ajouter un nouvel [classNameMin]</h2>
 <form (submit)="insert[classNameMaj]()">
+[inputs]
   <button type="submit">Ajouter</button>
 </form>
+<h2>Modifier un [classNameMin]</h2>
+<form *ngIf="[classNameMin]Selectionne.id[classNameMaj]" (submit)="update[classNameMaj]()">
+  [updates]
+  <button type="submit">Enregistrer</button>
+</form>
+
 

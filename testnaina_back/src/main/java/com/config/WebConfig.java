@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("*") // Configurez l'URL pour laquelle vous souhaitez autoriser CORS
+        registry.addMapping("/**") // Configurez l'URL pour laquelle vous souhaitez autoriser CORS
                 .allowedOrigins("*") // Autorisez les requêtes depuis cette origine (votre application Ionic)
                 .allowedMethods("GET", "POST", "PUT", "DELETE") // Autorisez les méthodes HTTP spécifiées
                 .allowedHeaders("*"); // Autorisez tous les en-têtes HTTP

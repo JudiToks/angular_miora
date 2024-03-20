@@ -451,20 +451,37 @@ public class Language {
         String fields="";
         String valeurs = "";
         String inputs = "";
+        String updateInput="";
         for(int i=0;i<entity.getFields().length;i++){
             fields+= "<th>"+HandyManUtils.minStart(entity.getFields()[i].getName())+" </th> \n \t";
             valeurs+="<td>{{uneligne."+HandyManUtils.minStart(entity.getFields()[i].getName())+"}}</td> \n \t";
-            inputs+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
-            inputs+="<input type='"+entity.getFields()[i].getAngularType()+"' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
-        }
+                if(entity.getFields()[i].isPrimary()==false){
+                    inputs+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
+                    inputs+="<input type='"+entity.getFields()[i].getAngularType()+"' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                    updateInput+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
+                    updateInput+="<input type='"+entity.getFields()[i].getAngularType()+"' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                }
+                else{
+                    updateInput+="<input type='hidden' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                }
+            }
         content = content.replace("[attributs]", fields);
         content = content.replace("[valeurs]",valeurs);
         content = content.replace("[inputs]", inputs);
+        content = content.replace("[updates]", updateInput);
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));
         content = content.replace("[classNameMin]",HandyManUtils.minStart(entity.getClassName()));
         String path = projectFilePath+"/"+HandyManUtils.minStart(entity.getClassName())+"/"+HandyManUtils.minStart(entity.getClassName())+".html";
         HandyManUtils.createFile(path);
         HandyManUtils.overwriteFileContent(path, content);
+    }
+    public void generateMenu(Entity[] entities,String filepath) throws IOException, Exception, Throwable{ 
+        String content = "<router-outlet>";
+        for(int i=0;i<entities.length;i++){
+            content+="<a href = '/"+HandyManUtils.minStart(entities[i].getClassName())+"'>"+HandyManUtils.minStart(entities[i].getClassName())+"</a>\n \t";
+        }
+        content+="<router-outlet />";
+        HandyManUtils.overwriteFileContent(filepath+"/app.component.html", content);
     }
 }
 

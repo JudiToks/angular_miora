@@ -13,8 +13,8 @@
  	<td>{{uneligne.nomDept}}</td> 
  	
       <td>
-        
-        
+        <button (click)="deleteDept(uneligne.idDept)">Supprimer</button>
+        <button (click)="deptSelectionne = uneligne">Modifier</button>
       </td>
     </tr>
   </tbody>
@@ -22,6 +22,18 @@
 
 <h2>Ajouter un nouvel deptt</h2>
 <form (submit)="insertDept()">
+<label>NomDept</label> 
+<input type='string' [(ngModel)]='nouvelDept.nomDept' name='nomDept'> 
+
   <button type="submit">Ajouter</button>
 </form>
+<h2>Modifier un dept</h2>
+<form *ngIf="deptSelectionne.idDept" (submit)="updateDept()">
+  <input type='hidden' [(ngModel)]='deptSelectionne.idDept' name='idDept'> 
+<label>NomDept</label> 
+<input type='string' [(ngModel)]='deptSelectionne.nomDept' name='nomDept'> 
+
+  <button type="submit">Enregistrer</button>
+</form>
+
 

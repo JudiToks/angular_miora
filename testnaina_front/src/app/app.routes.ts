@@ -6,7 +6,7 @@ import { EmpDeptComponent } from './empDept/empDept.component';
 import { DeptComponent } from './dept/dept.component'; 
 
 export const routes: Routes = [
-    {path:'',redirectTo : 'emp',pathMatch:'full'},
+    {path:'',redirectTo : '',pathMatch:'full'},
    {path : 'emp',component : EmpComponent },
  	{path : 'empDept',component : EmpDeptComponent },
  	{path : 'dept',component : DeptComponent },

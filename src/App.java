@@ -166,8 +166,9 @@ public class App {
                     language.generateAComponent(entities[i],vue_paths,apiHost);
                     }
                     
-                    language.overWriteRoute(entities, vue_paths);
-                   language.overWriteModule(entities, vue_paths);
+                language.overWriteRoute(entities, vue_paths);
+                language.overWriteModule(entities, vue_paths);
+                language.generateMenu(entities,vue_paths);
             }
         }
     }

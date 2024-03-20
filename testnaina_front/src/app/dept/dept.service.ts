@@ -18,22 +18,19 @@ export class DeptService {
   }
 
  
-  insertDept(dept: Dept): Observable<void> {
-    this.http.post<Dept>(this.apiUrl, dept);
-    return new Observable<void>();
+  insertDept(dept: Dept) {
+     return this.http.post<Dept>(this.apiUrl, dept);
   }
 
  
-  updateDept(dept: Dept): Observable<void> {
+  updateDept(dept: Dept) {
     //const url = `${this.apiUrl}/${ dept.id}`;
-    this.http.put<Dept>(this.apiUrl,  dept);
-    return new Observable<void>();
+    return this.http.put<Dept>(this.apiUrl,  dept);
   }
 
   
-  deleteDept(id: number): Observable<void> {
+  deleteDept(id: number) {
     const url = `${this.apiUrl}/${id}`;
-    this.http.delete<void>(url);
-    return new Observable<void>();
+    return this.http.delete<void>(url);
   }
 }

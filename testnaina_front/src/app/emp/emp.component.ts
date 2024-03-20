@@ -31,20 +31,37 @@ export class EmpComponent implements OnInit {
   }
 
   insertEmp(): void {
-    this.empService.insertEmp(this.nouvelEmp).subscribe(
-      
+    this.empService.insertEmp(this.nouvelEmp).subscribe({
+      next : (value) =>{
+            this.getEmp()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   updateEmp(): void {
-    this.empService.updateEmp(this.empSelectionne).subscribe(
-      
+    this.empService.updateEmp(this.empSelectionne).subscribe({
+      next : (value) =>{
+            this.getEmp()
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   deleteEmp(id: number): void {
-    this.empService.deleteEmp(id).subscribe(
-     
+    this.empService.deleteEmp(id).subscribe({
+     next : (value) =>{
+            this.getEmp()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 }

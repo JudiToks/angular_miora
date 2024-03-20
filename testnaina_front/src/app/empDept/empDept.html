@@ -15,8 +15,8 @@
  	<td>{{uneligne.idDept}}</td> 
  	
       <td>
-        
-       
+        <button (click)="deleteEmpDept(uneligne.idEmpDept)">Supprimer</button>
+        <button (click)="empDeptSelectionne = uneligne">Modifier</button>
       </td>
     </tr>
   </tbody>
@@ -24,6 +24,22 @@
 
 <h2>Ajouter un nouvel empDeptt</h2>
 <form (submit)="insertEmpDept()">
+<label>IdEmp</label> 
+<input type='number' [(ngModel)]='nouvelEmpDept.idEmp' name='idEmp'> 
+<label>IdDept</label> 
+<input type='number' [(ngModel)]='nouvelEmpDept.idDept' name='idDept'> 
+
   <button type="submit">Ajouter</button>
 </form>
+<h2>Modifier un empDept</h2>
+<form *ngIf="empDeptSelectionne.idEmpDept" (submit)="updateEmpDept()">
+  <input type='hidden' [(ngModel)]='empDeptSelectionne.idEmpDept' name='idEmpDept'> 
+<label>IdEmp</label> 
+<input type='number' [(ngModel)]='empDeptSelectionne.idEmp' name='idEmp'> 
+<label>IdDept</label> 
+<input type='number' [(ngModel)]='empDeptSelectionne.idDept' name='idDept'> 
+
+  <button type="submit">Enregistrer</button>
+</form>
+
 

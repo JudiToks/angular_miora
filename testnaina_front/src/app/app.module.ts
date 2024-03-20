@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { routes } from './app.routes';
 import { HttpClientModule } from '@angular/common/http';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { EmpComponent } from './emp/emp.component'; 
 import { EmpDeptComponent } from './empDept/empDept.component'; 
 import { DeptComponent } from './dept/dept.component'; 
@@ -10,14 +11,16 @@ import { DeptComponent } from './dept/dept.component';
 @NgModule({
   declarations: [
     EmpComponent , 
- 	  EmpDeptComponent , 
- 	  DeptComponent , 
+ 	EmpDeptComponent , 
+ 	DeptComponent , 
  	
   ],
   imports: [
     NgFor,
+    NgIf,
     HttpClientModule,
-    RouterModule.forRoot(routes)
+    FormsModule,
+    RouterModule.forRoot(routes) 
   ],
   providers: [],
   bootstrap: []

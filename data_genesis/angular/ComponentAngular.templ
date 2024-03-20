@@ -31,20 +31,37 @@ export class [classNameMaj]Component implements OnInit {
   }
 
   insert[classNameMaj](): void {
-    this.[classNameMin]Service.insert[classNameMaj](this.nouvel[classNameMaj]).subscribe(
-      
+    this.[classNameMin]Service.insert[classNameMaj](this.nouvel[classNameMaj]).subscribe({
+      next : (value) =>{
+            this.get[classNameMaj]()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   update[classNameMaj](): void {
-    this.[classNameMin]Service.update[classNameMaj](this.[classNameMin]Selectionne).subscribe(
-      
+    this.[classNameMin]Service.update[classNameMaj](this.[classNameMin]Selectionne).subscribe({
+      next : (value) =>{
+            this.get[classNameMaj]()
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 
   delete[classNameMaj](id: number): void {
-    this.[classNameMin]Service.delete[classNameMaj](id).subscribe(
-     
+    this.[classNameMin]Service.delete[classNameMaj](id).subscribe({
+     next : (value) =>{
+            this.get[classNameMaj]()
+
+        },
+        error : (err) =>{
+          console.log('err',err);
+        }}
     );
   }
 }

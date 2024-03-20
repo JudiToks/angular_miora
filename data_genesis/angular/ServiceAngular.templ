@@ -18,22 +18,19 @@ export class [classNameMaj]Service {
   }
 
  
-  insert[classNameMaj]([classNameMin]: [classNameMaj]): Observable<void> {
-    this.http.post<[classNameMaj]>(this.apiUrl, [classNameMin]);
-    return new Observable<void>();
+  insert[classNameMaj]([classNameMin]: [classNameMaj]) {
+     return this.http.post<[classNameMaj]>(this.apiUrl, [classNameMin]);
   }
 
  
-  update[classNameMaj]([classNameMin]: [classNameMaj]): Observable<void> {
+  update[classNameMaj]([classNameMin]: [classNameMaj]) {
     //const url = `${this.apiUrl}/${ [classNameMin].id}`;
-    this.http.put<[classNameMaj]>(this.apiUrl,  [classNameMin]);
-    return new Observable<void>();
+    return this.http.put<[classNameMaj]>(this.apiUrl,  [classNameMin]);
   }
 
   
-  delete[classNameMaj](id: number): Observable<void> {
+  delete[classNameMaj](id: number) {
     const url = `${this.apiUrl}/${id}`;
-    this.http.delete<void>(url);
-    return new Observable<void>();
+    return this.http.delete<void>(url);
   }
 }
