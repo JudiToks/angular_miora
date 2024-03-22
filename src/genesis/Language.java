@@ -452,21 +452,24 @@ public class Language {
         String valeurs = "";
         String inputs = "";
         String updateInput="";
+        String primary="";
         for(int i=0;i<entity.getFields().length;i++){
             fields+= "<th>"+HandyManUtils.minStart(entity.getFields()[i].getName())+" </th> \n \t";
             valeurs+="<td>{{uneligne."+HandyManUtils.minStart(entity.getFields()[i].getName())+"}}</td> \n \t";
                 if(entity.getFields()[i].isPrimary()==false){
                     inputs+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
-                    inputs+="<input type='"+entity.getFields()[i].getAngularType()+"' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                    inputs+="<input type='"+entity.getFields()[i].getAngularType()+"' class='form-control' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
                     updateInput+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
-                    updateInput+="<input type='"+entity.getFields()[i].getAngularType()+"' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                    updateInput+="<input type='"+entity.getFields()[i].getAngularType()+"' class='form-control' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
                 }
                 else{
+                    primary = ""+entity.getFields()[i].getName();
                     updateInput+="<input type='hidden' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
                 }
             }
         content = content.replace("[attributs]", fields);
         content = content.replace("[valeurs]",valeurs);
+        content = content.replace("[primary]", primary);
         content = content.replace("[inputs]", inputs);
         content = content.replace("[updates]", updateInput);
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));
