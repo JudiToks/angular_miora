@@ -457,8 +457,8 @@ public class Language {
             fields+= "<th>"+HandyManUtils.minStart(entity.getFields()[i].getName())+" </th> \n \t";
             valeurs+="<td>{{uneligne."+HandyManUtils.minStart(entity.getFields()[i].getName())+"}}</td> \n \t";
                 if(entity.getFields()[i].isPrimary()==false){
-                    inputs+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
-                    inputs+="<input type='"+entity.getFields()[i].getAngularType()+"' class='form-control' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
+                    inputs+="<div class=\"row mb-3 mt-2\"><label class=\"col-form-label offset-1 h3\">"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
+                    inputs+="<div class=\"offset-1 col-sm-10\" ><input type='"+entity.getFields()[i].getAngularType()+"' class='form-control' [(ngModel)]='nouvel[classNameMaj]."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'></div></div> \n";
                     updateInput+="<label>"+HandyManUtils.majStart(entity.getFields()[i].getName())+"</label> \n" ;
                     updateInput+="<input type='"+entity.getFields()[i].getAngularType()+"' class='form-control' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
                 }
@@ -480,10 +480,28 @@ public class Language {
     }
     public void generateMenu(Entity[] entities,String filepath) throws IOException, Exception, Throwable{ 
         String content = "<router-outlet>";
+
+        content+="<header id=\"header\" class=\"header fixed-top d-flex align-items-center\">\n" + //
+                        "\n" + //
+                        "    <div class=\"d-flex align-items-center justify-content-between\">\n" + //
+                        "      <a href=\"#\" class=\"logo d-flex align-items-center\">\n" + //
+                        "        <img src=\"assets/img/logo.png\" alt=\"\">\n" + //
+                        "        <span class=\"d-none d-lg-block\">Framework</span>\n" + //
+                        "      </a>\n" + //
+                        "      <i class=\"bi bi-list toggle-sidebar-btn\"></i>\n" + //
+                        "    </div><!-- End Logo -->\n" + //
+                        "\n" + //
+                        "  </header>";
+
+        content+="  <aside id=\"sidebar\" class=\"sidebar\">\n" + //
+                        "\n" + //
+                        "    <ul class=\"sidebar-nav\" id=\"sidebar-nav\">";
         for(int i=0;i<entities.length;i++){
-            content+="<a href = '/"+HandyManUtils.minStart(entities[i].getClassName())+"'>"+HandyManUtils.minStart(entities[i].getClassName())+"</a>\n \t";
+            content+="<li class=\"nav-item\"><a class=\"nav-link collapsed\" href = '/"+HandyManUtils.minStart(entities[i].getClassName())+"'><span>"+HandyManUtils.minStart(entities[i].getClassName())+"</span></a></li>\n \t";
         }
-        content+="<router-outlet />";
+        content+="</ul>\n" + //
+                        "\n" + //
+                        "  </aside><router-outlet/>";
         HandyManUtils.overwriteFileContent(filepath+"/app.component.html", content);
     }
 }

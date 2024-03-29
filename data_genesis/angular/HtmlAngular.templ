@@ -1,3 +1,12 @@
+<main id="main" class="main">
+<div class="pagetitle">
+  <h1>[classNameMaj]</h1>
+</div>
+
+<section class="section">
+
+<div class="row">
+<div class="col-lg-12">
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Liste des [classNameMin]</h5>
@@ -13,27 +22,57 @@
         <tr *ngFor="let uneligne of [classNameMin]">
           [valeurs]
           <td>
-            <button class="btn btn-danger" (click)="delete[classNameMaj](uneligne.[primary])">Supprimer</button>
+            <button class="btn btn-warning" (click)="[classNameMin]Selectionne = uneligne" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" >Modifier</button>
           </td>
           <td>
-            <button class="btn btn-warning" (click)="[classNameMin]Selectionne = uneligne">Modifier</button>
+            <button class="btn btn-danger" (click)="delete[classNameMaj](uneligne.[primary])">Supprimer</button>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
+</div>
+</div>
+
+
+<div class="row">
+<div class="offset-3 col-lg-6">
 <div class="card">
-  <h2>Ajouter un nouvel [classNameMin]</h2>
+  <div class="card-body">
+    <h5 class="card-title">Ajouter un nouvel [classNameMin]</h5>
   <form (submit)="insert[classNameMaj]()">
     [inputs]
-    <button class="btn btn-success" type="submit">Ajouter</button>
-  </form>
-  <h2>Modifier un [classNameMin]</h2>
-  <form *ngIf="[classNameMin]Selectionne.[primary]" (submit)="update[classNameMaj]()">
-    [updates]
-    <button class="btn btn-primary" type="submit">Enregistrer</button>
+    <div class="row mb-3 mt-5">
+    <div class="offset-5 col-sm-10">
+    <button class="btn btn-primary" type="submit">Ajouter</button>
+    </div>
+    </div>
   </form>
 </div>
 
 
+<div class="modal fade" id="modalDialogScrollable" tabindex="-1" *ngIf="[classNameMin]Selectionne.[primary]">
+
+    <form class="modal-dialog modal-dialog-scrollable" (submit)="update[classNameMaj]()" >
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">[classNameMin]</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        [updates]
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" type="submit">Confirmer modification</button>
+      </div>
+    </div>
+  </form>
+  
+</div>
+
+</div>
+</div>
+</div>
+  </section>
+</main>
