@@ -133,6 +133,11 @@ public class Language {
                     fieldAnnotes+=primAnnote+"\n";
                 }
             }
+            // else if(entity.getFields()[i].isForeign()){
+            //     for(int t=0;t<getModel().getModelForeignFieldAnnotations().length;t++){
+            //         fieldAnnotes+=getModel().getModelForeignFieldAnnotations()[t]+"\n";
+            //     }
+            // }
             for(String fa:getModel().getModelFieldAnnotations()){
                 fieldAnnotes+=fa+"\n";
             }
@@ -287,6 +292,7 @@ public class Language {
             methods=methods.replace("[pwd]", credentials.getPwd());
             methods=methods.replace("[databaseUseSSL]", String.valueOf(credentials.isUseSSL()));
             methods=methods.replace("[databaseAllowKey]", String.valueOf(credentials.isAllowPublicKeyRetrieval()));
+            methods = methods.replace("[typess]",HandyManUtils.majStart(entity.getPrimaryField().getType()) );
         }
         content=content.replace("[methods]", methods);
         content=content.replace("[controllerNameMaj]", getController().getControllerName());
@@ -308,76 +314,6 @@ public class Language {
     }
 
     // creation view
-    public String generateView(Entity entity, String projectName) throws IOException, Exception, Throwable{
-        String content=HandyManUtils.getFileContent(Constantes.DATA_PATH+"/"+getView().getViewContent()+"."+Constantes.VIEW_TEMPLATE_EXT);
-        String foreignList="";
-        String tableHeader="";
-        String tableLine="";
-        String foreignGet;
-        String updateForm="", insertForm="";
-        for(EntityField ef:entity.getFields()){
-            foreignGet="";
-            tableHeader+=getView().getViewTableHeader();
-            tableHeader=tableHeader.replace("[fieldNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
-            tableHeader=tableHeader.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-            tableHeader=tableHeader.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-            tableLine+=getView().getViewTableLine();
-            tableLine=tableLine.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-            tableLine=tableLine.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-            if(ef.isPrimary()){
-                tableLine=tableLine.replace("[foreignFieldGet]", foreignGet);
-                continue;
-            }
-            if(ef.isForeign()==false){
-                updateForm+=HandyManUtils.getFileContent(Constantes.DATA_PATH+"/"+getView().getViewUpdateFormField().get(ef.getType())+"."+Constantes.VIEW_TEMPLATE_EXT);
-                updateForm=updateForm.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-                updateForm=updateForm.replace("[fieldNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
-                updateForm=updateForm.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-                insertForm+=HandyManUtils.getFileContent(Constantes.DATA_PATH+"/"+getView().getViewInsertFormField().get(ef.getType())+"."+Constantes.VIEW_TEMPLATE_EXT);
-                insertForm=insertForm.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-                insertForm=insertForm.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-                insertForm=insertForm.replace("[fieldNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
-                tableLine=tableLine.replace("[foreignFieldGet]", foreignGet);
-                continue;
-            }
-            updateForm+=HandyManUtils.getFileContent(Constantes.DATA_PATH+"/"+getView().getViewUpdateFormForeignField()+"."+Constantes.VIEW_TEMPLATE_EXT);
-            updateForm=updateForm.replace("[foreignType]", ef.getType());
-            updateForm=updateForm.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
-            updateForm=updateForm.replace("[foreignNameMaj]", HandyManUtils.majStart(ef.getName()));
-            updateForm=updateForm.replace("[foreignPrimaryNameMaj]", HandyManUtils.majStart(ef.getReferencedField()));
-            updateForm=updateForm.replace("[foreignPrimaryNameMin]", HandyManUtils.minStart(ef.getReferencedField()));
-            updateForm=updateForm.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-            updateForm=updateForm.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-            updateForm=updateForm.replace("[foreignNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
-            insertForm+=HandyManUtils.getFileContent(Constantes.DATA_PATH+"/"+getView().getViewInsertFormForeignField()+"."+Constantes.VIEW_TEMPLATE_EXT);
-            insertForm=insertForm.replace("[foreignType]", ef.getType());
-            insertForm=insertForm.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
-            insertForm=insertForm.replace("[foreignNameMaj]", HandyManUtils.majStart(ef.getName()));
-            insertForm=insertForm.replace("[foreignPrimaryNameMaj]", HandyManUtils.majStart(ef.getReferencedField()));
-            insertForm=insertForm.replace("[foreignPrimaryNameMin]", HandyManUtils.minStart(ef.getReferencedField()));
-            insertForm=insertForm.replace("[fieldNameMin]", HandyManUtils.minStart(ef.getName()));
-            insertForm=insertForm.replace("[fieldNameMaj]", HandyManUtils.majStart(ef.getName()));
-            insertForm=insertForm.replace("[foreignNameFormattedMaj]", HandyManUtils.formatReadable(ef.getName()));
-            foreignGet=getView().getForeignFieldGet();
-            tableLine=tableLine.replace("[foreignFieldGet]", foreignGet);
-            foreignList+=getView().getViewForeignList();
-            foreignList=foreignList.replace("[foreignType]", ef.getType());
-            foreignList=foreignList.replace("[foreignNameMin]", HandyManUtils.minStart(ef.getName()));
-            foreignList=foreignList.replace("[foreignNameMaj]", HandyManUtils.majStart(ef.getName()));
-        }
-        content=content.replace("[viewForeignList]", foreignList);
-        content=content.replace("[viewTableHeader]", tableHeader);
-        content=content.replace("[viewTableLine]", tableLine);
-        content=content.replace("[viewUpdateFormField]", updateForm);
-        content=content.replace("[viewInsertFormField]", insertForm);
-        content=content.replace("[projectNameMin]", HandyManUtils.minStart(projectName));
-        content=content.replace("[projectNameMaj]", HandyManUtils.majStart(projectName));
-        content=content.replace("[classNameMaj]", HandyManUtils.majStart(entity.getClassName()));
-        content=content.replace("[classNameMin]", HandyManUtils.minStart(entity.getClassName()));
-        content=content.replace("[primaryNameMaj]", HandyManUtils.majStart(entity.getPrimaryField().getName()));
-        content=content.replace("[primaryNameMin]", HandyManUtils.minStart(entity.getPrimaryField().getName()));
-        return content;
-    }
     public void generateAComponent(Entity entity,String componentLocation,String urlService)throws IOException, Exception, Throwable{
         generateAngularModel(entity, componentLocation);
         generateAngularService(entity, componentLocation, urlService);
@@ -394,7 +330,7 @@ public class Language {
             routes+="{path : '"+HandyManUtils.minStart(entities[i].getClassName())+"',component : "+HandyManUtils.majStart(entities[i].getClassName())+"Component },\n \t";
         }
         content = content.replace("[imports]", imports);
-        content = content.replace("[routes]", routes);System.out.println(filepath+"\\app.routes.ts");
+        content = content.replace("[routes]", routes);
         HandyManUtils.overwriteFileContent(filepath+"/app.routes.ts", content);
     }
     public void overWriteModule(Entity[] entities,String filepath)throws IOException, Exception, Throwable{
@@ -413,7 +349,7 @@ public class Language {
          String content = HandyManUtils.getFileContent(Constantes.DATA_PATH+"/angular/SpecAngular."+Constantes.MODEL_TEMPLATE_EXT);
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));
         content = content.replace("[classNameMin]",HandyManUtils.minStart(entity.getClassName()));
-        String patht = path+"/"+HandyManUtils.minStart(entity.getClassName())+"/"+HandyManUtils.minStart(entity.getClassName())+".spec.ts";System.out.println(patht);
+        String patht = path+"/"+HandyManUtils.minStart(entity.getClassName())+"/"+HandyManUtils.minStart(entity.getClassName())+".spec.ts";
         HandyManUtils.createFile(patht);
         HandyManUtils.overwriteFileContent(patht, content);
     }
@@ -421,10 +357,18 @@ public class Language {
         String content = HandyManUtils.getFileContent(Constantes.DATA_PATH+"/angular/ModelAngular."+Constantes.MODEL_TEMPLATE_EXT);
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));
         String fields="";
+        String importation  = "";
         for(int i=0;i<entity.getFields().length;i++){
-            fields+=HandyManUtils.minStart(entity.getFields()[i].getName())+" : "+entity.getFields()[i].getAngularType()+" ; \n \t";
+            // if(entity.getFields()[i].isForeign()){
+            //     importation+="import {"+HandyManUtils.majStart(entity.getFields()[i].getName())+"} from ../"+HandyManUtils.minStart(entity.getFields()[i].getName())+"/"+HandyManUtils.minStart(entity.getFields()[i].getName())+".model;";
+            //     fields+=HandyManUtils.minStart(entity.getFields()[i].getName())+" : "+entity.getFields()[i].getType()+" ; \n \t";
+            // }
+            
+                fields+=HandyManUtils.minStart(entity.getFields()[i].getName())+" : "+entity.getFields()[i].getAngularType()+" ; \n \t";
+            
         }
         content = content.replace("[field]", fields);
+        content = content.replace("[import]", importation);
         String path =projectFilePath+"/"+HandyManUtils.minStart(entity.getClassName())+"/"+HandyManUtils.minStart(entity.getClassName())+".model.ts";
         HandyManUtils.createFile(path);
         HandyManUtils.overwriteFileContent(path, content);
@@ -443,7 +387,7 @@ public class Language {
         content = content.replace("[classNameMaj]",HandyManUtils.majStart(entity.getClassName()));
         content = content.replace("[classNameMin]",HandyManUtils.minStart(entity.getClassName()));
         String path = projetctFilePathl+"/"+HandyManUtils.minStart(entity.getClassName())+"/"+HandyManUtils.minStart(entity.getClassName())+".component.ts";
-        HandyManUtils.createFile(path);System.out.println("le component "+path);
+        HandyManUtils.createFile(path);
         HandyManUtils.overwriteFileContent(path, content);
     }
     public void generateAngularHtml(Entity entity,String projectFilePath) throws IOException, Exception, Throwable{
@@ -453,6 +397,7 @@ public class Language {
         String inputs = "";
         String updateInput="";
         String primary="";
+        String pagination="";
         for(int i=0;i<entity.getFields().length;i++){
             fields+= "<th>"+HandyManUtils.minStart(entity.getFields()[i].getName())+" </th> \n \t";
             valeurs+="<td>{{uneligne."+HandyManUtils.minStart(entity.getFields()[i].getName())+"}}</td> \n \t";
@@ -466,8 +411,11 @@ public class Language {
                     primary = ""+entity.getFields()[i].getName();
                     updateInput+="<input type='hidden' [(ngModel)]='[classNameMin]Selectionne."+entity.getFields()[i].getName()+"' name='"+entity.getFields()[i].getName()+"'> \n";
                 }
-            }
+                  }
+                  pagination+="<button (submit)=(pagination(uneligne."+HandyManUtils.minStart(entity.getPrimaryField().getName())+"))>Suivant</button>";
+          
         content = content.replace("[attributs]", fields);
+        content = content.replace("[pagination]", pagination);
         content = content.replace("[valeurs]",valeurs);
         content = content.replace("[primary]", primary);
         content = content.replace("[inputs]", inputs);
@@ -479,30 +427,13 @@ public class Language {
         HandyManUtils.overwriteFileContent(path, content);
     }
     public void generateMenu(Entity[] entities,String filepath) throws IOException, Exception, Throwable{ 
-        String content = "<router-outlet>";
-
-        content+="<header id=\"header\" class=\"header fixed-top d-flex align-items-center\">\n" + //
-                        "\n" + //
-                        "    <div class=\"d-flex align-items-center justify-content-between\">\n" + //
-                        "      <a href=\"#\" class=\"logo d-flex align-items-center\">\n" + //
-                        "        <img src=\"assets/img/logo.png\" alt=\"\">\n" + //
-                        "        <span class=\"d-none d-lg-block\">Framework</span>\n" + //
-                        "      </a>\n" + //
-                        "      <i class=\"bi bi-list toggle-sidebar-btn\"></i>\n" + //
-                        "    </div><!-- End Logo -->\n" + //
-                        "\n" + //
-                        "  </header>";
-
-        content+="  <aside id=\"sidebar\" class=\"sidebar\">\n" + //
-                        "\n" + //
-                        "    <ul class=\"sidebar-nav\" id=\"sidebar-nav\">";
+        String contentbase = HandyManUtils.getFileContent(Constantes.DATA_PATH+"/angular/MenuAngular."+Constantes.MODEL_TEMPLATE_EXT);
+        String content = "";
         for(int i=0;i<entities.length;i++){
             content+="<li class=\"nav-item\"><a class=\"nav-link collapsed\" href = '/"+HandyManUtils.minStart(entities[i].getClassName())+"'><span>"+HandyManUtils.minStart(entities[i].getClassName())+"</span></a></li>\n \t";
         }
-        content+="</ul>\n" + //
-                        "\n" + //
-                        "  </aside><router-outlet/>";
-        HandyManUtils.overwriteFileContent(filepath+"/app.component.html", content);
+       contentbase=contentbase.replace("[listes]", content);
+        HandyManUtils.overwriteFileContent(filepath+"/app.component.html", contentbase);
     }
 }
 

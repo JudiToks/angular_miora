@@ -69,13 +69,16 @@ public class Entity {
                     column.setReferencedTable(result.getString("foreign_table_name"));
                     column.setReferencedColumn(result.getString("foreign_column_name"));
                     field=new EntityField();
+                    field.setName(column.getName());
                     if(column.isForeign()){
-                        field.setName(HandyManUtils.toCamelCase(column.getName()));
+                    //    field.setName(HandyManUtils.minStart(HandyManUtils.toCamelCase(column.getReferencedTable())));
+                    //     field.setType(HandyManUtils.majStart(HandyManUtils.toCamelCase(column.getReferencedTable())));
+                        
                         field.setType(language.getTypes().get(database.getTypes().get(column.getType())));
                         field.setReferencedField(HandyManUtils.toCamelCase(column.getReferencedColumn()));
                     }
                     else{
-                        field.setName(HandyManUtils.toCamelCase(column.getName()));
+                        
                         field.setType(language.getTypes().get(database.getTypes().get(column.getType())));
                     }
                     field.setAngularType(database.getAngularTypes().get(column.getType()));

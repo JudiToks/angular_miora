@@ -1,0 +1,93 @@
+<main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Emp</h1>
+  </div>
+
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Liste des emp</h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>id_emp </th> 
+                  <th>nom </th> 
+                  <td></td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let uneligne of emp">
+                  <td>{{uneligne.id_emp}}</td> 
+ 	                <td>{{uneligne.nom}}</td> 
+                  <td>
+                    <button class="btn btn-warning" (click)="empSelectionne = uneligne" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" >Modifier</button>
+                  </td>
+                  <td>
+                    <button class="btn btn-danger" (click)="deleteEmp(uneligne.id_emp)">Supprimer</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <ul class="pagination" *ngFor="let page of pages">
+              <span *ngIf="currentPage == page; else elseblock">
+                <li class="page-item active">
+                  <a class="page-link" (click)="getEmp(page)">
+                    {{page + 1}}
+                  </a>
+                </li>
+              </span>
+              <ng-template #elseblock>
+                <li class="page-item">
+                  <a class="page-link" (click)="getEmp(page)">
+                    {{page + 1}}
+                  </a>
+                </li>
+              </ng-template>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="offset-3 col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Ajouter un nouvel emp</h5>
+            <form (submit)="insertEmp()">
+              <div class="row mb-3 mt-2"><label class="col-form-label offset-1 h3">Nom</label> 
+<div class="offset-1 col-sm-10" ><input type='string' class='form-control' [(ngModel)]='nouvelEmp.nom' name='nom'></div></div> 
+
+              <div class="row mb-3 mt-5">
+                <div class="offset-5 col-sm-10">
+                  <button class="btn btn-primary" type="submit">Ajouter</button>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal fade" id="modalDialogScrollable" tabindex="-1" *ngIf="empSelectionne.id_emp">
+            <form class="modal-dialog modal-dialog-scrollable" (submit)="updateEmp()" >
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">emp</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <input type='hidden' [(ngModel)]='empSelectionne.id_emp' name='id_emp'> 
+<label>Nom</label> 
+<input type='string' class='form-control' [(ngModel)]='empSelectionne.nom' name='nom'> 
+
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" type="submit">Confirmer modification</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

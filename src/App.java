@@ -92,7 +92,6 @@ public class App {
             credentialFile = new File(project.getPath(), Constantes.CREDENTIAL_FILE);
             credentialFile.createNewFile();
             HandyManUtils.overwriteFileContent(credentialFile.getPath(), HandyManUtils.toJson(credentials));
-        //    VUEEEE // HandyManUtils.overwriteFileContent(credentialFileView.getPath(), HandyManUtils.toJson(credentials));
             for (String replace : language.getProjectNameTags()) {
                 projectNameTagPath = replace.replace("[projectNameMaj]", HandyManUtils.majStart(projectName))
                         .replace("[projectNameMin]", HandyManUtils.minStart(projectName));
@@ -130,9 +129,9 @@ public class App {
                             + language.getController().getControllerNameSuffix() + "."
                             + language.getController().getControllerExtension();
                     HandyManUtils.createFile(modelFile);
-
                     for (CustomFile f : language.getModel().getModelAdditionnalFiles()) {
                         foreignContext = "";
+                        
                         for (EntityField ef : entities[i].getFields()) {
                             if (ef.isForeign()) {
                                 foreignContext += language.getModel().getModelForeignContextAttr();
@@ -151,6 +150,14 @@ public class App {
                                 HandyManUtils.minStart(projectName));
                         customFileContent = customFileContent.replace("[projectNameMaj]",
                                 HandyManUtils.majStart(projectName));
+                        customFileContent=customFileContent.replace("[classNameMaj]", HandyManUtils.majStart(entities[i].getClassName()));
+                        for(int r=0;r<entities[i].getFields().length;r++){
+                                System.out.println("entities[i].getFields()[r].getName() = "+entities[i].getFields()[r].getName());
+                        }
+                        customFileContent=customFileContent.replace("[classNameMin]", HandyManUtils.minStart(entities[i].getClassName()));System.out.println("HandyManUtils.minStart( entities[i].getPrimaryField().getName()) = "+ HandyManUtils.minStart( entities[i].getPrimaryField().getName()));
+                        customFileContent=customFileContent.replace("[primaryIds]",HandyManUtils.minStart( entities[i].getPrimaryField().getName()));
+                        customFileContent=customFileContent.replace("[primaryType]",HandyManUtils.majStart( entities[i].getPrimaryField().getType()));
+                        
                         customFileContent = customFileContent.replace("[databaseHost]", credentials.getHost());
                         customFileContent = customFileContent.replace("[databaseName]", credentials.getDatabaseName());
                         customFileContent = customFileContent.replace("[user]", credentials.getUser());
@@ -160,7 +167,7 @@ public class App {
                         HandyManUtils.overwriteFileContent(customFile, customFileContent);
                     }
                     HandyManUtils.createFile(controllerFile);
-                    HandyManUtils.overwriteFileContent(modelFile, models[i]);System.out.println("model file == "+modelFile);
+                    HandyManUtils.overwriteFileContent(modelFile, models[i]);
                     HandyManUtils.overwriteFileContent(controllerFile, controllers[i]);
                     
                     language.generateAComponent(entities[i],vue_paths,apiHost);
